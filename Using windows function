@@ -1,0 +1,24 @@
+SELECT
+    d.name AS Department,
+    e.name AS Employee,
+    e.salary
+FROM
+    Employee e
+JOIN
+    Department d ON e.departmentId = d.id
+WHERE
+    (e.id, e.departmentId) IN (
+        SELECT
+            id,
+            departmentId
+        FROM (
+            SELECT
+                id,
+                departmentId,
+                RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) as salary_rank
+            FROM
+                Employee
+        ) AS RankedEmployees
+        WHERE
+            salary_rank = 1
+    );
