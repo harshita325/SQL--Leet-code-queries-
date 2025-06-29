@@ -1,0 +1,21 @@
+
+Tables:
+Customers table:
+| Column Name | Type |
+| :---------- | :--- |
+| id | int |
+| name | varchar |
+id is the primary key (column with unique values) for this table.
+Orders table:
+| Column Name | Type |
+| :---------- | :--- |
+| id | int |
+| customerId | int |
+id is the primary key (column with unique values) for this table.
+SQL Query (using NOT IN):
+SELECT
+    name
+FROM
+    Customers
+WHERE
+    id NOT IN (SELECT customerId FROM Orders);
