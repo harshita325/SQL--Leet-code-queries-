@@ -1,0 +1,17 @@
+SELECT
+    e.name
+FROM
+    Employee e
+JOIN (
+    SELECT
+        managerId,
+        COUNT(id) AS direct_reports
+    FROM
+        Employee
+    WHERE
+        managerId IS NOT NULL -- Exclude employees with no manager
+    GROUP BY
+        managerId
+    HAVING
+        COUNT(id) >= 5
+) AS ManagersWithEnoughReports ON e.id = ManagersWithEnoughReports.managerId;
